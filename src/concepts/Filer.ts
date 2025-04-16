@@ -5,7 +5,7 @@ import { Folder } from "./Folder";
 import db from "../utils/db";
 import { Tables } from "../constants/db.tables";
 import { FolderTableRows, StorageTableFields } from "../interfaces/db.types";
-import { FileType } from "../interfaces/Folder.types";
+import { FileType, FolderPayload } from "../interfaces/Folder.types";
 import { FilerPayload } from "../interfaces/Filer.types";
 import fs, { accessSync, constants } from "fs";
 
@@ -102,4 +102,5 @@ export class Filer {
         );
     }
   }
+  protected createFolder(payload: FolderPayload): void {}
 }

@@ -13,7 +13,7 @@ db.exec(`
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS ${Tables.Folder} (
-    id TEXT PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL UNIQUE,
     type TEXT CHECK(type in ('${FolderType.PRIVATE}', '${FolderType.PUBLIC}')) NOT NULL,
     path TEXT NOT NULL,
@@ -21,6 +21,12 @@ db.exec(`
     max_file_size NUMERIC,
     allowed_types TEXT,
     default_quota INTEGER
+  )
+`);
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS ${Tables.FolderMetadata} (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
   )
 `);
 

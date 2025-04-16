@@ -21,12 +21,23 @@ export interface StorageTableRows {
 }
 
 export interface FolderTableRows {
-  id: string;
+  id: number;
   name: string;
   type: FolderType;
   path: string;
   password?: string | null;
   max_file_size?: number | null;
-  allowed_types?: string | null; // or a parsed structure if you store JSON
+  allowed_types?: string | null; // TODO: Must be offtype FileType.
   default_quota?: number | null;
+}
+
+export interface FolderMetadataRows {
+  id: number;
+  folder_id: number;
+  isDirectory: boolean;
+  isFile: boolean;
+  size: number;
+  createdAt: Date;
+  modifiedAt: Date;
+  path: string;
 }

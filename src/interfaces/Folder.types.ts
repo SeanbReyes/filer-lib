@@ -87,5 +87,15 @@ export interface FolderPayload {
 
 export interface GetFolderDataResponse {
   path: string;
-  id: string;
+  id: number;
+  metadata?: FolderStatResponse | null;
+}
+
+export interface FolderStatResponse {
+  isDirectory: boolean;
+  isFile: boolean;
+  size: number;
+  createdAt: Date;
+  modifiedAt: Date;
+  path: string;
 }

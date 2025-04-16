@@ -1,24 +1,33 @@
-import { Tables } from "../constants/db.tables";
 import {
   DEFAULT_FOLDER_FILE_TYPE,
   DEFAULT_FOLDER_MAX_FILE_SIZE,
   DEFAULT_FOLDER_QUOTA,
 } from "../constants/folder.constants";
-import { FolderTableRows } from "../interfaces/db.types";
 import {
   FolderConfig,
   FolderPayload,
+  FolderStatResponse,
   GetFolderDataResponse,
 } from "../interfaces/Folder.types";
-import db from "../utils/db";
+import { FolderDatabaseRepository } from "../repository/Folder.database-repository";
+import { FolderWriterOs } from "../repository/Folder.writer-os";
+import { FolderService } from "../services/Folder.service";
 import { File } from "./File";
 
 export class Folder {
-  public id: string;
+  public id: number;
   public config: Required<FolderConfig>;
   declare private files: File[];
   declare private folders: Folder[];
+  declare public metadata?: FolderStatResponse | null;
+  private readonly service: FolderService;
   constructor(payload: FolderPayload) {
+    const FolderWriterOsRepository = new FolderWriterOs();
+    const FolderDBeRepository = new FolderDatabaseRepository();
+    this.service = new FolderService(
+      FolderWriterOsRepository,
+      FolderDBeRepository,
+    );
     const folder_data: GetFolderDataResponse = this.getFolderData(
       payload.config.name,
     );
@@ -35,16 +44,11 @@ export class Folder {
     this.id = folder_data.id;
   }
   private getFolderData(name: string): GetFolderDataResponse {
-    const row =
-      (db
-        .prepare(`SELECT id, path FROM ${Tables.Folder} WHERE name = ?`)
-        .get(`${name}`) as FolderTableRows) || undefined;
-    if (!row) {
-      throw new Error("Folder does not exists");
-    }
-    return {
-      id: row.id,
-      path: row.path,
+    const { id, path } = this.service.getFolderData(name);
+    const data = {
+      id,
+      path,
     };
+    return data;
   }
 }
