@@ -54,6 +54,7 @@ export enum FileType {
   CONF = "conf",
   YML = "yml",
   YAML = "yaml",
+  ANY = "any",
 }
 
 export enum FolderType {
@@ -61,23 +62,30 @@ export enum FolderType {
   PRIVATE = "PRIVATE",
 }
 
-export interface FolderPayload {
+export interface FolderConfig {
   name: string;
-  default_quota?: string;
+  default_quota?: number;
   allowed_types?: FileType;
   max_file_size?: number;
-  password?: string;
-  type: FolderType;
-  path?: string;
-}
-
-export interface FolderStored {
-  id: string;
-  name: string;
+  password?: string | null;
   type: FolderType;
   path: string;
+}
+
+export interface FolderConfigPayload {
+  name: string;
+  default_quota?: number;
+  allowed_types?: FileType;
+  max_file_size?: number;
   password?: string | null;
-  max_file_size?: number | null;
-  allowed_types?: string | null; // or a parsed structure if you store JSON
-  default_quota?: number | null;
+  type: FolderType;
+}
+
+export interface FolderPayload {
+  config: FolderConfigPayload;
+}
+
+export interface GetFolderDataResponse {
+  path: string;
+  id: string;
 }
