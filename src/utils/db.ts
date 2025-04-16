@@ -15,12 +15,19 @@ db.exec(`
   CREATE TABLE IF NOT EXISTS ${Tables.Folder} (
     id TEXT PRIMARY KEY,
     name TEXT NOT NULL UNIQUE,
-    type TEXT CHECK(type in (${FolderType.PRIVATE}, ${FolderType.PUBLIC})) NOT NULL,
+    type TEXT CHECK(type in ('${FolderType.PRIVATE}', '${FolderType.PUBLIC}')) NOT NULL,
     path TEXT NOT NULL,
     password TEXT,
     max_file_size NUMERIC,
     allowed_types TEXT,
-    default_quota INTEGER,
+    default_quota INTEGER
+  )
+`);
+
+db.exec(`
+  CREATE TABLE IF NOT EXISTS ${Tables.Storage} (
+    path TEXT NOT NULL,
+    max_size_bytes INTEGER
   )
 `);
 

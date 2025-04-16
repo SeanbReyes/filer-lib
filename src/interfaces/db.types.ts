@@ -10,6 +10,16 @@ export interface CertificationTableRows {
   certificate_path: string;
 }
 
+export enum StorageTableFields {
+  path = `path`,
+  max_size_bytes = `max_size_bytes`,
+}
+
+export interface StorageTableRows {
+  path: string;
+  max_size_bytes: number;
+}
+
 export interface FolderTableRows {
   id: string;
   name: string;

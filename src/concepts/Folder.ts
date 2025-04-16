@@ -17,6 +17,7 @@ export class Folder {
   public id: string;
   public config: Required<FolderConfig>;
   declare private files: File[];
+  declare private folders: Folder[];
   constructor(payload: FolderPayload) {
     const folder_data: GetFolderDataResponse = this.getFolderData(
       payload.config.name,
