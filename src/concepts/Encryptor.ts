@@ -9,11 +9,11 @@ import { readFileSync, writeFileSync } from "node:fs";
 import fs from "fs";
 import path from "node:path/posix";
 import db from "../utils/db";
-import { CertificateTableName } from "../constants/db.tables";
 import {
   CertificationTableFields,
   CertificationTableRows,
 } from "../interfaces/db.types";
+import { Tables } from "../constants/db.tables";
 
 export class Encryptor {
   private certificate_path_name: string = ".signature";
@@ -44,7 +44,7 @@ export class Encryptor {
     const verifier = createVerify("SHA256");
     const row =
       (db
-        .prepare(`SELECT * FROM ${CertificateTableName} WHERE id = ?`)
+        .prepare(`SELECT * FROM ${Tables.Certification} WHERE id = ?`)
         .get("1") as CertificationTableRows) || undefined;
     if (!row) {
       throw new Error(
@@ -81,7 +81,7 @@ export class Encryptor {
             JSON.stringify({ date: payload.date, signature }, null, 2),
           );
           const stmt = db.prepare(
-            `INSERT OR REPLACE INTO ${CertificateTableName} (${(CertificationTableFields.id, CertificationTableFields.certificate_path)}) VALUES (?,?)`,
+            `INSERT OR REPLACE INTO ${Tables.Certification} (${(CertificationTableFields.id, CertificationTableFields.certificate_path)}) VALUES (?,?)`,
           );
           stmt.run("1", final_path);
         } catch (e) {

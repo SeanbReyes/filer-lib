@@ -1,11 +1,11 @@
 import Database from "better-sqlite3";
-import { CertificateTableName, Tables } from "../constants/db.tables";
+import { Tables } from "../constants/db.tables";
 import { FolderType } from "../interfaces/Folder.types";
 
 const db = new Database("access.db");
 
 db.exec(`
-  CREATE TABLE IF NOT EXISTS ${CertificateTableName} (
+  CREATE TABLE IF NOT EXISTS ${Tables.Certification} (
     id TEXT PRIMARY KEY,
     certificate_path TEXT
   )
@@ -26,7 +26,15 @@ db.exec(`
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS ${Tables.FolderMetadata} (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,  -- Auto-incrementing id
+    folder_id INTEGER,  -- Foreign key pointing to Folder table
+    isDirectory BOOLEAN NOT NULL,
+    isFile BOOLEAN NOT NULL,
+    size INTEGER NOT NULL,
+    createdAt TEXT NOT NULL,  -- Storing as ISO 8601 string
+    modifiedAt TEXT NOT NULL, -- Storing as ISO 8601 string
+    path TEXT NOT NULL,
+    FOREIGN KEY (folder_id) REFERENCES ${Tables.Folder}(id) ON DELETE CASCADE
   )
 `);
 

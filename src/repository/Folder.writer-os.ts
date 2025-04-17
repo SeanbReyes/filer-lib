@@ -1,5 +1,5 @@
 import { FolderWriterAdapter } from "../adapters/Folder.writer-abstract";
-import { FileSystemErrorManager } from "../errors/Errors";
+import { FileSystemErrorManager } from "../errors";
 import { FolderStatResponse } from "../interfaces";
 import fs from "fs";
 import { resolve } from "path";

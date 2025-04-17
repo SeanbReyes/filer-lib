@@ -4,7 +4,6 @@ export {
   CheckAccessPayload,
   CreateSignaturePayload,
   FileType,
-  FilerManagerPort,
   FilerPayload,
   FolderConfig,
   FolderConfigPayload,
@@ -16,5 +15,7 @@ export {
   GetFolderDataResponse,
   StorageTableFields,
   StorageTableRows,
+  FolderMetadataRows,
+  FolderStatResponse,
 } from "./interfaces";
 export { FilerManager } from "./core/Filer.impl";

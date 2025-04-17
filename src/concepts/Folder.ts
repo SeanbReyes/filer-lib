@@ -9,8 +9,6 @@ import {
   FolderStatResponse,
   GetFolderDataResponse,
 } from "../interfaces/Folder.types";
-import { FolderDatabaseRepository } from "../repository/Folder.database-repository";
-import { FolderWriterOs } from "../repository/Folder.writer-os";
 import { FolderService } from "../services/Folder.service";
 import { File } from "./File";
 
@@ -22,12 +20,7 @@ export class Folder {
   declare public metadata?: FolderStatResponse | null;
   private readonly service: FolderService;
   constructor(payload: FolderPayload) {
-    const FolderWriterOsRepository = new FolderWriterOs();
-    const FolderDBeRepository = new FolderDatabaseRepository();
-    this.service = new FolderService(
-      FolderWriterOsRepository,
-      FolderDBeRepository,
-    );
+    this.service = new FolderService();
     const folder_data: GetFolderDataResponse = this.getFolderData(
       payload.config.name,
     );

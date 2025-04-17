@@ -3,10 +3,9 @@ import { FolderDatabaseRepository } from "../repository/Folder.database-reposito
 import { FolderWriterOs } from "../repository/Folder.writer-os";
 
 export class FolderService {
-  constructor(
-    private readonly writer: FolderWriterOs,
-    private readonly repository: FolderDatabaseRepository,
-  ) {
+  private readonly writer: FolderWriterOs;
+  private readonly repository: FolderDatabaseRepository;
+  constructor() {
     this.writer = new FolderWriterOs();
     this.repository = new FolderDatabaseRepository();
   }
