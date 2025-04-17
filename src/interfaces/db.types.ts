@@ -15,6 +15,17 @@ export enum StorageTableFields {
   max_size_bytes = `max_size_bytes`,
 }
 
+export enum FolderTableFields {
+  id = `id`,
+  name = `name`,
+  type = `type`,
+  path = `path`,
+  password = `password`,
+  max_file_size = `max_file_size`,
+  allowed_types = `allowed_types`, // TODO: Must be offtype FileType.
+  default_quota = `default_quota`,
+}
+
 export interface StorageTableRows {
   path: string;
   max_size_bytes: number;

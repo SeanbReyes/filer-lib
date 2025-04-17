@@ -5,6 +5,7 @@ import { FolderType } from "../interfaces/Folder.types";
 const db = new Database("access.db");
 db.pragma("journal_mode = WAL");
 db.pragma("busy_timeout = 5000");
+db.pragma("foreign_keys = ON");
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS ${Tables.Certification} (
@@ -42,7 +43,7 @@ db.exec(`
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS ${Tables.Storage} (
-    path TEXT NOT NULL,
+    path TEXT NOT NULL UNIQUE,
     max_size_bytes INTEGER
   )
 `);

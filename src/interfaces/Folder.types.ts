@@ -62,6 +62,19 @@ export enum FolderType {
   PRIVATE = "PRIVATE",
 }
 
+export interface FolderConfigPayload {
+  id: number;
+  name: string;
+  type: FolderType;
+  path: string;
+  password?: string | null;
+  max_file_size?: number;
+  allowed_types?: FileType;
+  default_quota?: number;
+}
+
+export interface CreateFolderPayloadConfig extends Omit<FolderConfig, "path"> {}
+
 export interface FolderConfig {
   name: string;
   default_quota?: number;
@@ -72,17 +85,14 @@ export interface FolderConfig {
   path: string;
 }
 
-export interface FolderConfigPayload {
-  name: string;
-  default_quota?: number;
-  allowed_types?: FileType;
-  max_file_size?: number;
-  password?: string | null;
-  type: FolderType;
+export interface CreateFolderResponse {
+  id: number;
+  config: FolderConfig;
+  metadata: FolderStatResponse;
 }
 
 export interface FolderPayload {
-  config: FolderConfigPayload;
+  config: CreateFolderPayloadConfig;
 }
 
 export interface GetFolderDataResponse {
@@ -91,11 +101,23 @@ export interface GetFolderDataResponse {
   metadata?: FolderStatResponse | null;
 }
 
-export interface FolderStatResponse {
+export interface FolderStatResponse extends Omit<FolderMetadata, "id"> {}
+
+export interface CheckExistenceQueryResponse {
+  count: number;
+}
+
+export interface FolderMetadata {
+  id: number;
   isDirectory: boolean;
   isFile: boolean;
   size: number;
-  createdAt: Date;
-  modifiedAt: Date;
+  createdAt: string;
+  modifiedAt: string;
   path: string;
+}
+
+export interface FolderDatabaseResponse {
+  metadata: FolderMetadata;
+  config: FolderConfigPayload;
 }

@@ -1,6 +1,6 @@
 import { Encryptor } from "../concepts/Encryptor";
 import { Filer } from "../concepts/Filer";
-import { CheckAccessPayload } from "../interfaces";
+import { CheckAccessPayload, FolderPayload } from "../interfaces";
 import { FilerManagerPort } from "../adapters/Filer.abstract";
 import { FilerPayload } from "../interfaces/Filer.types";
 
@@ -15,5 +15,8 @@ export class FilerManager extends Filer implements FilerManagerPort {
   }
   public checkStorageAccess(payload: CheckAccessPayload): boolean {
     return this.Encryptor.checkAccess(payload);
+  }
+  public newFolder(payload: FolderPayload): void {
+    this.createFolder(payload);
   }
 }

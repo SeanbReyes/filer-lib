@@ -2,6 +2,8 @@ import { Folder } from "./Folder";
 import { FileType, FolderPayload } from "../interfaces/Folder.types";
 import { FilerPayload } from "../interfaces/Filer.types";
 import { FilerService } from "../services/Filer.service";
+import { FilerErrorManager } from "../errors/FilerErrors";
+import { FilerErrorCode } from "../constants/errors";
 
 export class Filer {
   declare private path: string;
@@ -26,6 +28,8 @@ export class Filer {
   }
   private initialize_root(path: string, max_size_bytes?: number | null): void {
     this.service.initialize_root(path, max_size_bytes);
+    this.path = path;
+    this.max_size_bytes = max_size_bytes || Infinity;
   }
   private initializeFolders(): void {
     const rows = this.service.getAllFolders();
@@ -43,9 +47,22 @@ export class Filer {
           max_file_size: rows[x].max_file_size || undefined,
           password: rows[x].password,
         },
+        path: this._path,
       });
       this.folders.push(folder);
     }
   }
-  protected createFolder(payload: FolderPayload): void {}
+  protected createFolder(payload: FolderPayload): void {
+    const exists = this.folders.find(
+      (it) => it.config.name === payload.config.name,
+    );
+    if (exists) {
+      throw FilerErrorManager.handle(
+        FilerErrorCode.FOLDER_EE,
+        payload.config.name,
+      );
+    }
+    const folder = new Folder({ ...payload, path: this._path });
+    this.folders.push(folder);
+  }
 }

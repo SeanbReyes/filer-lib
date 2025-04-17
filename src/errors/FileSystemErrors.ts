@@ -1,5 +1,5 @@
 class FileSystemError extends Error {
-  code: string;
+  public code: string;
 
   constructor(message: string, code: string) {
     super(message);
