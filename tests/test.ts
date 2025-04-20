@@ -7,3 +7,24 @@ filer.newFolder({
     type: FolderType.PUBLIC,
   },
 });
+
+filer.newFolder({
+  config: {
+    name: "cars",
+    type: FolderType.PRIVATE,
+  },
+});
+
+filer.newFolder({
+  config: {
+    name: "dogs",
+    type: FolderType.PRIVATE,
+  },
+});
+
+filer.newFolder({
+  config: {
+    name: "cats",
+    type: FolderType.PRIVATE,
+  },
+});

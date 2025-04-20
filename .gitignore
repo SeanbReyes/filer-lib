@@ -138,3 +138,7 @@ dist
 # access.db
 # access.db-shm
 # access.db.wal
+
+*.db
+*.db-shm
+*.db-wal

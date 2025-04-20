@@ -2,12 +2,12 @@ import { Folder } from "./Folder";
 import { FileType, FolderPayload } from "../interfaces/Folder.types";
 import { FilerPayload } from "../interfaces/Filer.types";
 import { FilerService } from "../services/Filer.service";
-import { FilerErrorManager } from "../errors/FilerErrors";
-import { FilerErrorCode } from "../constants/errors";
+// import { FilerErrorManager } from "../errors/FilerErrors";
+// import { FilerErrorCode } from "../constants/errors";
 
 export class Filer {
   declare private path: string;
-  declare private folders: Folder[];
+  private folders: Folder[] = [];
   declare private max_size_bytes: number;
   private readonly service: FilerService;
   constructor(payload: FilerPayload) {
@@ -56,13 +56,9 @@ export class Filer {
     const exists = this.folders.find(
       (it) => it.config.name === payload.config.name,
     );
-    if (exists) {
-      throw FilerErrorManager.handle(
-        FilerErrorCode.FOLDER_EE,
-        payload.config.name,
-      );
+    if (!exists) {
+      const folder = new Folder({ ...payload, path: this._path });
+      this.folders.push(folder);
     }
-    const folder = new Folder({ ...payload, path: this._path });
-    this.folders.push(folder);
   }
 }
