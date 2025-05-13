@@ -12,4 +12,4 @@
 - 📏 Optional size limits (e.g., 100MB max)
 - 🔐 Ideal for internal tools, local apps, or self-hosted services
 
-
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/SeanbReyes/filer-lib)
